@@ -1,3 +1,2 @@
-# minimal-edi-package
-Minimal EML assembly line example, including a small subset of an NES-LTER
-dataset.
+# nes-lter-poc-mvco
+NES-LTER Particulate organic carbon and nitrogen from MVCO data package for EDI
