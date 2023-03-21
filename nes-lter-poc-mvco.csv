@@ -1,4 +1,4 @@
-event_number,event_number_niskin,datetime,latitude,longitude,depth,replicate,POC_micromolar,PON_micromolar,POC_microg_perL,PON_microg_perL,C_to_N_molar_ratio,C_quality_flag,N_quality_flag
+event_number,event_number_niskin,date_time_utc,latitude,longitude,depth,replicate,POC_micromolar,PON_micromolar,POC_microg_perL,PON_microg_perL,C_to_N_molar_ratio,C_quality_flag,N_quality_flag
 MVCO_305,MVCO_305_01,2012-11-06 16:13:00,41.325,-70.565,15,a,21.152,2.811,254.05,39.374,7.525,1,1
 MVCO_305,MVCO_305_02,2012-11-06 16:13:00,41.325,-70.565,10,a,18.056,2.634,216.861,36.891,6.855,1,1
 MVCO_305,MVCO_305_03,2012-11-06 16:13:00,41.325,-70.565,6,a,20.324,3.07,244.101,42.997,6.621,1,1
