@@ -34,3 +34,5 @@ keywords.txt
 knb-lter-nes.999.1.xml
 personnel.txt
 minimal-edi-package.nb.html
+*.png
+MVCO_poc_4EDI*.csv

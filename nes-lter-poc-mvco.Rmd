@@ -17,13 +17,55 @@ library(EMLassemblyline)
 library(ediutilities)
 library(here)
 library(lubridate)
+library(readxl)
+library(dplyr)
 ```
 
-Read example data table
+Read data table
 
 ```{r}
+poc_mvco <- read.csv(here('MVCO_poc_4EDI_20250707.csv'))
+```
+
+Add Tioga cruise number
+
+```{r}
+
+df <- read_excel('List of MVCO cruises for NES-LTER project 20250523.xlsx', sheet = "catalog", skip = 6)
+Tioga_ID <- df %>% select(1, 3, 4, 5)
+
+poc_mvco <- left_join(poc_mvco, Tioga_ID, by = "event_number")
+
+poc_mvco <- poc_mvco %>%
+  select(-date)  %>%
+
+  relocate(ship, .before = date_time_utc) %>%
+  relocate(cruise, .before = date_time_utc)
+
+poc_mvco <- poc_mvco %>%
+  rename(cruise_ID = cruise)
+
+poc_mvco[] <- lapply(poc_mvco, function(x) {
+  if (is.character(x)) x[x == "NA"] <- NA
+  return(x)
+})
+
+```
+
+```{r}
+# write csv file for package
+write.csv(poc_mvco, "nes-lter-poc-mvco.csv", na = "", row.names = FALSE)
+```
+
+Read data table
+
+```{r}
+
 data_table <- read.csv(here('nes-lter-poc-mvco.csv'))
-data_table$date = ymd_hms(data_table$date)
+
+# identify date column for ediutilities package to generate temporal coverage
+data_table$date = ymd_hms(data_table$date_time_utc)
+
 ```
 
 Read the Excel metadata template and generate text templates used by
@@ -35,7 +77,7 @@ excel_to_template(here('nes-lter-poc-mvco-info'), 'nes-lter-poc-mvco', rights='C
 Generate the package and insert the parent project node into the resulting EML
 
 ```{r}
-# use a dummy package ID
+# provide package ID
 pkg_id <- 'knb-lter-nes.28.1'
 
 make_eml(here(),
@@ -51,5 +93,5 @@ make_eml(here(),
          user.domain = "LTER",
          package.id = pkg_id)
 
-project_insert(pkg_id)
+project_insert(pkg_id, "parent_project_NESI-II_RAPID.txt")
 ```
