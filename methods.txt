@@ -45,3 +45,16 @@ M. Ehrhardt and W. Koeve. 1999. Determination of particulate organic carbon and 
 
 Sharp, J. H. 1974. Improved analysis for particulate organic carbon and nitrogen from seawater. Limnology and Oceanography, 19, 984-989.
  
+# Related Packages
+
+Event logs from Northeast U.S. Shelf Long Term Ecological Research (NES-LTER) cruises to the Martha's Vineyard Coastal Observatory (MVCO), are in the following package:
+
+Sosik, H.M., E.T. Crockford, E. Peacock, and J.K. Llopiz. 2025. Event logs from Northeast U.S. Shelf Long Term Ecological Research (NES-LTER) cruises to the Martha's Vineyard Coastal Observatory (MVCO) ongoing since 2017 ver 2. Environmental Data Initiative. https://doi.org/10.6073/pasta/efff67e138fe866c2e763e2ae68e2d34 (Accessed 2025-07-21).
+
+Particulate organic carbon (POC) and nitrogen (PON) from NES-LTER Transect cruises, which cover a larger geographic area of the same region, are in the following package:
+
+Sosik, H.M., E.T. Crockford, and E. Peacock. 2025. Particulate organic carbon (POC) and nitrogen (PON) from Northeast U.S. Shelf Long Term Ecological Research (NES-LTER) Transect cruises, ongoing since 2017 ver 3. Environmental Data Initiative. https://doi.org/10.6073/pasta/79463e428673133dd9f7994e54e7daf6 (Accessed 2025-07-21).
+
+
+
+
