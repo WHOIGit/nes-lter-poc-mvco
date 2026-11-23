@@ -1,7 +1,7 @@
 ---
 title: "NES-LTER Particulate organic carbon and nitrogen from MVCO data package for EDI"
 author: "Joe Futrelle"
-date: "2023-03-21"
+date: "rsys.date"
 output: html_notebook
 ---
 
@@ -19,19 +19,20 @@ library(here)
 library(lubridate)
 library(readxl)
 library(dplyr)
+library(ggplot2)
 ```
 
 Read data table
 
 ```{r}
-poc_mvco <- read.csv(here('MVCO_poc_4EDI_20250707.csv'))
+poc_mvco <- read.csv(here('nes-lter-poc-mvco_copy20261109_badremoved.csv'))
 ```
 
 Add Tioga cruise number
 
 ```{r}
 
-df <- read_excel('List of MVCO cruises for NES-LTER project 20250523.xlsx', sheet = "catalog", skip = 6)
+df <- read_excel('List of MVCO cruises for NES-LTER project 20260213.xlsx', sheet = "catalog", skip = 6)
 Tioga_ID <- df %>% select(1, 3, 4, 5)
 
 poc_mvco <- left_join(poc_mvco, Tioga_ID, by = "event_number")
@@ -51,6 +52,26 @@ poc_mvco[] <- lapply(poc_mvco, function(x) {
 })
 
 ```
+
+```{r}
+
+poc_mvco$C_quality_flag <- as.factor(poc_mvco$C_quality_flag)
+poc_mvco$N_quality_flag <- as.factor(poc_mvco$N_quality_flag)
+
+ggplot(poc_mvco, aes(x = date_time_utc, y = POC_microg_perL, color = C_quality_flag)) +
+  geom_point() +
+  theme_minimal()
+
+ggplot(poc_mvco, aes(x = date_time_utc, y = PON_microg_perL, color = N_quality_flag)) +
+  geom_point() +
+  theme_minimal()
+
+ggplot(poc_mvco, aes(x = date_time_utc, y = C_to_N_molar_ratio, color = N_quality_flag)) +
+  geom_point() +
+  theme_minimal()
+
+```
+
 
 ```{r}
 # write csv file for package
@@ -81,10 +102,10 @@ Generate the package and insert the parent project node into the resulting EML
 pkg_id <- 'knb-lter-nes.28.1'
 
 make_eml(here(),
-         dataset.title='Demonstration of minimal EDI package',
+         dataset.title="Particulate organic carbon (POC) and nitrogen (PON) from the Martha's Vineyard Coastal Observatory (MVCO), ongoing since 2012 (NES-LTER since 2017)",
          data.table='nes-lter-poc-mvco.csv',
-         data.table.description='Example NES-LTER data',
-         data.table.name = 'Subset of NES-LTER nutrient data',
+         data.table.description='Amount of particulate organic carbon and nitrogen from water column bottle samples taken near the Marthas Vineyard Coastal Observatory',
+         data.table.name = 'nes-lter-poc-mvco',
          temporal.coverage = temporal_coverage(data_table$date),
          geographic.description = "NES-LTER Transect",
          geographic.coordinates = geographic_coordinates(data_table$latitude, data_table$longitude),
