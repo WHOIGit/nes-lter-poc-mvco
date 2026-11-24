@@ -53,29 +53,152 @@ poc_mvco[] <- lapply(poc_mvco, function(x) {
 
 ```
 
+
+```{r}
+
+poc_mvco <- poc_mvco |>
+  mutate(PON_micromolar = case_when(N_quality_flag == 6 ~ 0, TRUE ~ PON_micromolar)) |>
+  mutate(PON_microg_perL = case_when(N_quality_flag == 6 ~ 0, TRUE ~ PON_microg_perL))
+
+```
+
 ```{r}
 
 poc_mvco$C_quality_flag <- as.factor(poc_mvco$C_quality_flag)
 poc_mvco$N_quality_flag <- as.factor(poc_mvco$N_quality_flag)
+poc_mvco$date_time_utc <- as.POSIXct(poc_mvco$date_time_utc)
 
 ggplot(poc_mvco, aes(x = date_time_utc, y = POC_microg_perL, color = C_quality_flag)) +
   geom_point() +
+  scale_color_viridis_d(option = "turbo")+
+  scale_x_datetime(date_breaks = "1 year", date_labels = "%Y") +
   theme_minimal()
 
 ggplot(poc_mvco, aes(x = date_time_utc, y = PON_microg_perL, color = N_quality_flag)) +
   geom_point() +
+  scale_color_viridis_d(option = "turbo")+
+  scale_x_datetime(date_breaks = "1 year", date_labels = "%Y") +
   theme_minimal()
 
 ggplot(poc_mvco, aes(x = date_time_utc, y = C_to_N_molar_ratio, color = N_quality_flag)) +
   geom_point() +
+  scale_color_viridis_d(option = "turbo")+
+  scale_x_datetime(date_breaks = "1 year", date_labels = "%Y") +
   theme_minimal()
+
+ggplot(poc_mvco, aes(x = date_time_utc, y = POC_microg_perL, color = ship)) +
+  geom_point() +
+  scale_color_brewer(palette = "Spectral", na.value = "gray50")+
+  scale_x_datetime(date_breaks = "1 year", date_labels = "%Y") +
+  theme_minimal()
+
+ggplot(poc_mvco, aes(x = date_time_utc, y = PON_microg_perL, color = ship)) +
+  geom_point() +
+  scale_color_brewer(palette = "Spectral", na.value = "gray50")+
+  scale_x_datetime(date_breaks = "1 year", date_labels = "%Y") +
+  theme_minimal()
+
+
+
+```
+
+```{r}
+
+poc_transect <- read.csv(here('nes-lter-poc-transect.csv'))
+#data_table$date_time_utc = ymd_hms(data_table$date)
+
+# filter by position
+
+# Transect MVCO ranges lat =  41.3125 - 41.3269, lon = -70.5629 to -70.5857
+# MVCO_nut_copy ranges lat = 41.1364 - 41.339, lon = -70.4151 to -70.6839
+lat_min <- 41.13
+lat_max <- 41.33
+lon_min <- -70.68
+lon_max <- -70.41
+# Filter rows within the specified range of latitude and longitude
+filtered_poc <- poc_transect |>
+  filter(latitude >= lat_min & latitude <= lat_max,
+         longitude >= lon_min & longitude <= lon_max)
+
+
+filtered_poc <- filtered_poc |>
+  mutate(ship = case_when(
+    grepl("^AR", cruise) ~ "Neil Armstrong",
+    grepl("^AT", cruise) ~ "Atlantis",
+    grepl("^EN", cruise) ~ "Endeavor",
+    grepl("^HRS", cruise) ~ "Hugh R. Sharp",
+    grepl("^AE", cruise) ~ "Atlantic Explorer",
+    TRUE ~ ""  # Set to empty string for unmatched cases
+      ),
+    event_number = paste(cruise, cast, sep = "_"),  
+    event_number_niskin = paste(cruise, cast, niskin, sep = "_"), 
+    cruise_ID = cruise
+  )
+
+# eliminate columns:
+#filtered_poc <- select(filtered_poc, -cruise, -cast, -niskin)
+
+# Merge transect data with mvco
+common_columns <- intersect(names(poc_mvco), names(filtered_poc))
+filtered_poc_aligned <- filtered_poc %>% select(all_of(common_columns))
+#missing_columns <- setdiff(names(poc_mvco), names(filtered_poc_aligned))
+#filtered_poc_aligned[missing_columns] <- NA
+#filtered_poc_aligned <- filtered_poc_aligned %>% select(names(poc_mvco))
+
+filtered_poc_aligned$date_time_utc <- as.POSIXct(filtered_poc_aligned$date_time_utc)
+filtered_poc_aligned$C_quality_flag <- as.factor(filtered_poc_aligned$C_quality_flag)
+filtered_poc_aligned$N_quality_flag <- as.factor(filtered_poc_aligned$N_quality_flag)
+
+poc_mvco_all <- bind_rows(poc_mvco, filtered_poc_aligned)
+
+#nutrients_input$datetime <- as.POSIXct(nutrients_input$datetime, tz = "GMT", format="%Y-%m-%d %H:%M:%OS")
+
+poc_mvco_all <- poc_mvco_all[order(poc_mvco_all$date_time_utc), ]
+
+```
+
+```{r}
+
+poc_mvco_all$C_quality_flag <- as.factor(poc_mvco_all$C_quality_flag)
+poc_mvco_all$N_quality_flag <- as.factor(poc_mvco_all$N_quality_flag)
+
+ggplot(poc_mvco_all, aes(x = date_time_utc, y = POC_microg_perL, color = C_quality_flag)) +
+  geom_point() +
+  scale_color_viridis_d(option = "turbo")+
+  scale_x_datetime(date_breaks = "1 year", date_labels = "%Y") +
+  theme_minimal()
+
+ggplot(poc_mvco_all, aes(x = date_time_utc, y = POC_microg_perL, color = ship)) +
+  geom_point() +
+  scale_color_brewer(palette = "Spectral", na.value = "gray50")+
+  scale_x_datetime(date_breaks = "1 year", date_labels = "%Y") +
+  theme_minimal()
+
+ggplot(poc_mvco_all, aes(x = date_time_utc, y = PON_microg_perL, color = N_quality_flag)) +
+  geom_point() +
+  scale_color_viridis_d(option = "turbo")+
+  scale_x_datetime(date_breaks = "1 year", date_labels = "%Y") +
+  theme_minimal()
+
+ggplot(poc_mvco_all, aes(x = date_time_utc, y = PON_microg_perL, color = ship)) +
+  geom_point() +
+  scale_color_brewer(palette = "Spectral", na.value = "gray50")+
+  scale_x_datetime(date_breaks = "1 year", date_labels = "%Y") +
+  theme_minimal()
+
+ggplot(poc_mvco_all, aes(x = date_time_utc, y = C_to_N_molar_ratio, color = N_quality_flag)) +
+  geom_point() +
+  scale_color_viridis_d(option = "turbo")+
+  scale_x_datetime(date_breaks = "1 year", date_labels = "%Y") +
+  theme_minimal()
+
 
 ```
 
 
 ```{r}
 # write csv file for package
-write.csv(poc_mvco, "nes-lter-poc-mvco.csv", na = "", row.names = FALSE)
+write.csv(poc_mvco_all, "nes-lter-poc-mvco.csv", na = "", row.names = FALSE)
 ```
 
 Read data table
