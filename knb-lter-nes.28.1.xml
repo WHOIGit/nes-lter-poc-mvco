@@ -53,17 +53,16 @@
     </associatedParty>
     <associatedParty>
       <individualName>
-        <givenName>Kate</givenName>
-        <surName>Morkeski</surName>
+        <givenName>Joanne</givenName>
+        <surName>Koch</surName>
       </individualName>
       <organizationName>Northeast U.S. Shelf LTER</organizationName>
-      <electronicMailAddress>kmorkeski@whoi.edu</electronicMailAddress>
-      <userId directory="https://orcid.org">https://orcid.org/0000-0002-2903-5851</userId>
-      <role>metadataProvider</role>
+      <electronicMailAddress>jkoch@whoi.edu</electronicMailAddress>
+      <role>softwareDeveloper</role>
     </associatedParty>
-    <pubDate>2026-11-23</pubDate>
+    <pubDate>2026-11-25</pubDate>
     <abstract>
-      <para>Particulate organic carbon and nitrogen are measured from water column bottle and bucket samples taken on Northeast U.S. Shelf Long-Term Ecological Research (NES-LTER) day cruises in the vicinity of the Martha's Vineyard Coastal Observatory (MVCO). Sampling frequency near MVCO is approximately monthly, ongoing since 2012. Samples were filtered and collected on combusted glass fiber filters, pelletized using ultra clean tin disks, and combusted using a Flash EA1112 CHN analyzer to calculate concentrations of particulate organic carbon and particulate organic nitrogen in micromoles per liter. Values are also reported as concentrations in micrograms per liter and carbon to nitrogen molar ratio.
+      <para>Particulate organic carbon and nitrogen are measured from water column bottle and bucket samples taken on Northeast U.S. Shelf Long-Term Ecological Research (NES-LTER) day cruises in the vicinity of the Martha's Vineyard Coastal Observatory (MVCO). Sampling frequency near MVCO is approximately monthly, ongoing since 2012. Samples were filtered and collected on combusted glass fiber filters, pelletized using ultra clean tin disks, and combusted using a Flash EA1112 CHN analyzer to calculate concentration of particulate organic carbon and particulate organic nitrogen in micromoles per liter. Values are also reported as concentration in micrograms per liter and carbon to nitrogen molar ratio.
 </para>
     </abstract>
     <keywordSet>
@@ -104,10 +103,10 @@
       <geographicCoverage>
         <geographicDescription>NES-LTER Transect</geographicDescription>
         <boundingCoordinates>
-          <westBoundingCoordinate>-70.5657</westBoundingCoordinate>
-          <eastBoundingCoordinate>-70.565</eastBoundingCoordinate>
-          <northBoundingCoordinate>41.325</northBoundingCoordinate>
-          <southBoundingCoordinate>41.3243</southBoundingCoordinate>
+          <westBoundingCoordinate>-70.5861</westBoundingCoordinate>
+          <eastBoundingCoordinate>-70.5626</eastBoundingCoordinate>
+          <northBoundingCoordinate>41.3274</northBoundingCoordinate>
+          <southBoundingCoordinate>41.3125</southBoundingCoordinate>
         </boundingCoordinates>
       </geographicCoverage>
       <temporalCoverage>
@@ -116,7 +115,7 @@
             <calendarDate>2012-11-06</calendarDate>
           </beginDate>
           <endDate>
-            <calendarDate>2022-06-30</calendarDate>
+            <calendarDate>2025-10-23</calendarDate>
           </endDate>
         </rangeOfDates>
       </temporalCoverage>
@@ -330,8 +329,8 @@ Sosik, H.M., E.T. Crockford, and E. Peacock. 2025. Particulate organic carbon (P
       <entityDescription>Amount of particulate organic carbon and nitrogen from water column bottle samples taken near the Marthas Vineyard Coastal Observatory</entityDescription>
       <physical>
         <objectName>nes-lter-poc-mvco.csv</objectName>
-        <size unit="bytes">49853</size>
-        <authentication method="MD5">da12edc599408ef5b4f6cafcb8a38152</authentication>
+        <size unit="bytes">58206</size>
+        <authentication method="MD5">1cf17ab15ca50e3252d8f130d05ee879</authentication>
         <dataFormat>
           <textFormat>
             <numHeaderLines>1</numHeaderLines>
@@ -435,8 +434,8 @@ Sosik, H.M., E.T. Crockford, and E. Peacock. 2025. Particulate organic carbon (P
               <numericDomain>
                 <numberType>real</numberType>
                 <bounds>
-                  <minimum exclusive="false">41.3243</minimum>
-                  <maximum exclusive="false">41.325</maximum>
+                  <minimum exclusive="false">41.3125</minimum>
+                  <maximum exclusive="false">41.3274</maximum>
                 </bounds>
               </numericDomain>
             </ratio>
@@ -458,8 +457,8 @@ Sosik, H.M., E.T. Crockford, and E. Peacock. 2025. Particulate organic carbon (P
               <numericDomain>
                 <numberType>real</numberType>
                 <bounds>
-                  <minimum exclusive="false">-70.5657</minimum>
-                  <maximum exclusive="false">-70.565</maximum>
+                  <minimum exclusive="false">-70.5861</minimum>
+                  <maximum exclusive="false">-70.5626</maximum>
                 </bounds>
               </numericDomain>
             </ratio>
@@ -482,7 +481,7 @@ Sosik, H.M., E.T. Crockford, and E. Peacock. 2025. Particulate organic carbon (P
                 <numberType>real</numberType>
                 <bounds>
                   <minimum exclusive="false">0</minimum>
-                  <maximum exclusive="false">15.5</maximum>
+                  <maximum exclusive="false">16.94</maximum>
                 </bounds>
               </numericDomain>
             </ratio>
@@ -514,8 +513,8 @@ Sosik, H.M., E.T. Crockford, and E. Peacock. 2025. Particulate organic carbon (P
               <numericDomain>
                 <numberType>real</numberType>
                 <bounds>
-                  <minimum exclusive="false">5.668</minimum>
-                  <maximum exclusive="false">90.013</maximum>
+                  <minimum exclusive="false">0</minimum>
+                  <maximum exclusive="false">107.203</maximum>
                 </bounds>
               </numericDomain>
             </ratio>
@@ -537,7 +536,7 @@ Sosik, H.M., E.T. Crockford, and E. Peacock. 2025. Particulate organic carbon (P
               <numericDomain>
                 <numberType>real</numberType>
                 <bounds>
-                  <minimum exclusive="false">0.537</minimum>
+                  <minimum exclusive="false">0</minimum>
                   <maximum exclusive="false">17.32</maximum>
                 </bounds>
               </numericDomain>
@@ -560,8 +559,8 @@ Sosik, H.M., E.T. Crockford, and E. Peacock. 2025. Particulate organic carbon (P
               <numericDomain>
                 <numberType>real</numberType>
                 <bounds>
-                  <minimum exclusive="false">68.083</minimum>
-                  <maximum exclusive="false">1081.114</maximum>
+                  <minimum exclusive="false">0</minimum>
+                  <maximum exclusive="false">1287.58</maximum>
                 </bounds>
               </numericDomain>
             </ratio>
@@ -583,7 +582,7 @@ Sosik, H.M., E.T. Crockford, and E. Peacock. 2025. Particulate organic carbon (P
               <numericDomain>
                 <numberType>real</numberType>
                 <bounds>
-                  <minimum exclusive="false">7.522</minimum>
+                  <minimum exclusive="false">0</minimum>
                   <maximum exclusive="false">242.592</maximum>
                 </bounds>
               </numericDomain>
@@ -684,7 +683,7 @@ Sosik, H.M., E.T. Crockford, and E. Peacock. 2025. Particulate organic carbon (P
           </measurementScale>
         </attribute>
       </attributeList>
-      <numberOfRecords>430</numberOfRecords>
+      <numberOfRecords>474</numberOfRecords>
     </dataTable>
   </dataset>
   <additionalMetadata>

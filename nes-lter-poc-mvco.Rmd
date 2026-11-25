@@ -1,6 +1,6 @@
 ---
 title: "NES-LTER Particulate organic carbon and nitrogen from MVCO data package for EDI"
-author: "Joe Futrelle"
+author: "Joe Futrelle, Kate Morkeski"
 date: "rsys.date"
 output: html_notebook
 ---
@@ -74,21 +74,15 @@ ggplot(poc_mvco, aes(x = date_time_utc, y = POC_microg_perL, color = C_quality_f
   scale_x_datetime(date_breaks = "1 year", date_labels = "%Y") +
   theme_minimal()
 
-ggplot(poc_mvco, aes(x = date_time_utc, y = PON_microg_perL, color = N_quality_flag)) +
-  geom_point() +
-  scale_color_viridis_d(option = "turbo")+
-  scale_x_datetime(date_breaks = "1 year", date_labels = "%Y") +
-  theme_minimal()
-
-ggplot(poc_mvco, aes(x = date_time_utc, y = C_to_N_molar_ratio, color = N_quality_flag)) +
-  geom_point() +
-  scale_color_viridis_d(option = "turbo")+
-  scale_x_datetime(date_breaks = "1 year", date_labels = "%Y") +
-  theme_minimal()
-
 ggplot(poc_mvco, aes(x = date_time_utc, y = POC_microg_perL, color = ship)) +
   geom_point() +
   scale_color_brewer(palette = "Spectral", na.value = "gray50")+
+  scale_x_datetime(date_breaks = "1 year", date_labels = "%Y") +
+  theme_minimal()
+
+ggplot(poc_mvco, aes(x = date_time_utc, y = PON_microg_perL, color = N_quality_flag)) +
+  geom_point() +
+  scale_color_viridis_d(option = "turbo")+
   scale_x_datetime(date_breaks = "1 year", date_labels = "%Y") +
   theme_minimal()
 
@@ -98,11 +92,20 @@ ggplot(poc_mvco, aes(x = date_time_utc, y = PON_microg_perL, color = ship)) +
   scale_x_datetime(date_breaks = "1 year", date_labels = "%Y") +
   theme_minimal()
 
-
+ggplot(poc_mvco, aes(x = date_time_utc, y = C_to_N_molar_ratio, color = N_quality_flag)) +
+  geom_point() +
+  scale_color_viridis_d(option = "turbo")+
+  scale_x_datetime(date_breaks = "1 year", date_labels = "%Y") +
+  theme_minimal()
 
 ```
 
 ```{r}
+
+# NES-LTER transect POC data file copied locally from its repo
+# good alternatives are to access from EDI or GitHub
+#https://portal.edirepository.org/nis/mapbrowse?scope=knb-lter-nes&identifier=27&revision=newest
+# https://github.com/WHOIGit/nes-lter-poc-transect/blob/main/nes-lter-poc-transect-input.csv
 
 poc_transect <- read.csv(here('nes-lter-poc-transect.csv'))
 #data_table$date_time_utc = ymd_hms(data_table$date)
@@ -119,7 +122,6 @@ lon_max <- -70.41
 filtered_poc <- poc_transect |>
   filter(latitude >= lat_min & latitude <= lat_max,
          longitude >= lon_min & longitude <= lon_max)
-
 
 filtered_poc <- filtered_poc |>
   mutate(ship = case_when(
@@ -150,8 +152,6 @@ filtered_poc_aligned$C_quality_flag <- as.factor(filtered_poc_aligned$C_quality_
 filtered_poc_aligned$N_quality_flag <- as.factor(filtered_poc_aligned$N_quality_flag)
 
 poc_mvco_all <- bind_rows(poc_mvco, filtered_poc_aligned)
-
-#nutrients_input$datetime <- as.POSIXct(nutrients_input$datetime, tz = "GMT", format="%Y-%m-%d %H:%M:%OS")
 
 poc_mvco_all <- poc_mvco_all[order(poc_mvco_all$date_time_utc), ]
 
@@ -198,7 +198,7 @@ ggplot(poc_mvco_all, aes(x = date_time_utc, y = C_to_N_molar_ratio, color = N_qu
 
 ```{r}
 # write csv file for package
-write.csv(poc_mvco_all, "nes-lter-poc-mvco.csv", na = "", row.names = FALSE)
+write.csv(poc_mvco_all, "nes-lter-poc-mvco.csv", na = "NaN", row.names = FALSE)
 ```
 
 Read data table
@@ -216,7 +216,8 @@ Read the Excel metadata template and generate text templates used by
 EMLassemblyline
 
 ```{r}
-excel_to_template(here('nes-lter-poc-mvco-info'), 'nes-lter-poc-mvco', rights='CC0')
+excel_to_template(here('nes-lter-poc-mvco-info'), 'nes-lter-poc-mvco', rights='CC0', file_type=".md")
+
 ```
 Generate the package and insert the parent project node into the resulting EML
 
